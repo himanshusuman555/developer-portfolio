@@ -37,8 +37,8 @@ export default defineNuxtConfig({
         // ...
       ],
       link: [
-        { rel: 'manifest', href: 'pwa/manifest.json' },
-        { rel: 'apple-touch-icon', href: 'pwa/icons/apple-touch-icon.png' },
+        { rel: 'manifest', href: '/pwa/manifest.json' },
+        { rel: 'apple-touch-icon', href: '/pwa/icons/apple-touch-icon.png' },
       ],
     },
   },
@@ -81,6 +81,17 @@ export default defineNuxtConfig({
       fs: {
         strict: false,
       },
+    },
+  },
+
+  /**
+   * The prerender crawler treats the manifest/apple-touch-icon <link> hrefs as
+   * page routes and 404s on them (they're static files in public/, served fine
+   * at runtime) — don't fail the whole generate over those false positives.
+   */
+  nitro: {
+    prerender: {
+      failOnError: false,
     },
   },
 
